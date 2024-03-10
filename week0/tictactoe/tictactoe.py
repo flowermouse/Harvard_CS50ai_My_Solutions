@@ -147,6 +147,8 @@ def minimax(board):
    
     if terminal(board):
         return None
+    elif board == initial_state():
+        return ((1, 1))
     else:
         if player(board) == X:
             return MaxValue(board)[1]
