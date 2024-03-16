@@ -270,7 +270,7 @@ class MinesweeperAI():
             empty = Sentence(set(), 0)
             self.knowledge[:] = [x for x in self.knowledge if x != empty]
 
-        # produce new sentences
+            # produce new sentences
             for sentence_1 in self.knowledge:
                 for sentence_2 in self.knowledge:
                     if sentence_1 == sentence_2:

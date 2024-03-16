@@ -113,23 +113,29 @@ def iterate_pagerank(corpus, damping_factor):
     """
     total = len(corpus)
     pages = list(corpus.keys())
+
     # assigning each page a rank of 1 / N
-    probability = {each : 1 / total for each in pages}
+    old_rank = {each : 1 / total for each in pages}
+    new_rank = {}
+
     # iterate over
     change = 1
     while change >= 0.001:
-        old_rank = deepcopy(probability)
         for page in pages:
             new = 0
             for link_to in pages:
                 # A page that has no links should be interpreted as having one link for every page
-                if corpus[link_to] == None:
+                if len(corpus[link_to]) == 0:    # set() != None
                     new += old_rank[link_to] / total
                 elif page in corpus[link_to]:
                     new += old_rank[link_to] / len(corpus[link_to])
-            probability[page] = new * damping_factor + (1 - damping_factor) / total
-        change = max([abs(old_p - new_p) for old_p in old_rank.values() for new_p in probability.values()])    
-    return probability
+
+            new_rank[page] = new * damping_factor + (1 - damping_factor) / total
+
+        change = max([abs(new_rank[x] - old_rank[x]) for x in pages])
+        old_rank = new_rank.copy()    
+
+    return new_rank
 
 
 if __name__ == "__main__":
