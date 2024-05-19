@@ -31,12 +31,12 @@ CELL_SIZE = 10
 handwriting = [[0] * COLS for _ in range(ROWS)]
 classification = None
 
-while True:
-
+running = True
+while running:
     # Check if game quit
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            sys.exit()
+            running = False
 
     screen.fill(BLACK)
 
@@ -123,3 +123,5 @@ while True:
         screen.blit(classificationText, classificationRect)
 
     pygame.display.flip()
+
+pygame
